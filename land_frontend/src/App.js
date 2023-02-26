@@ -1,30 +1,30 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Add from "./Pages/Add";
-import Update from "./Pages/Update";
 import Login from "./Pages/Login";
 import List from './Pages/List';
+import Home from './Pages/Home';
 // import Search from './Pages/Search';
 
 function App() {
+  const getToken = () => {
+    const tokenString = sessionStorage.getItem('token');
+    const userToken = JSON.parse(tokenString);
+    return userToken;
+  }
   return (
     <div>
       <BrowserRouter>
       <Routes>
-        {/* <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} /> */}
-        <Route path="/add" element={<Add />}/>
-        <Route path="/update/:id" element={<Update />}/>
-        {/* <Route path="/search/" element={<Search /> */}
         <Route
          path="/" 
          element={
-          localStorage.getItem('user-info') ?
-          <List />
-          :
+          !getToken() ?
           <Login />
+          :
+          <Home />
          }
         />
+        <Route path='/owner' element={<List />} />
       </Routes>
       </BrowserRouter>
     </div>

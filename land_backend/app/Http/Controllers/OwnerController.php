@@ -109,7 +109,7 @@ class OwnerController extends Controller
             'message' => 'owner deleted'
         ]);
     }
-    function search(Request $request) {
+    public function search(Request $request) {
         $validatedKey = $request->validate([
             'key' => ['required']
         ]);

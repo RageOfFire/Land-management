@@ -7,7 +7,28 @@ function Login() {
   const [validated, setValidated] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const getToken = () => {
+    const tokenString = sessionStorage.getItem('token');
+    const userToken = JSON.parse(tokenString);
+    return userToken;
+  }
+  const getUser = () => {
+    const userString = sessionStorage.getItem('user');
+    const userDetail = JSON.parse(userString);
+    return userDetail;
+  }
+  const [token, setToken] = useState(getToken());
+  const [user,setUser] = useState(getUser());
   const navigate = useNavigate();
+  
+
+  const saveToken = (user,token) => {
+    sessionStorage.setItem('token', JSON.stringify(token));
+    sessionStorage.setItem('user', JSON.stringify(user));
+    setToken(token);
+    setUser(user);
+    navigate("/");
+  }
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget;
@@ -16,34 +37,28 @@ function Login() {
       event.stopPropagation();
     }
     else {
-      event.preventDefault();
-      try {
-        const formData = new FormData();
-        formData.append("email", email);
-        formData.append("password", password);
-        console.warn(formData);
-        await fetch("http://127.0.0.1:8000/api/users/login", {
-          method: "POST",
-          body: formData,
-        })
-          .then((res) => {
-            console.warn(res);
-            if (res["status"] === "success") {
-              localStorage.setItem("user-info", JSON.stringify(res));
-              Swal.fire("Đăng nhập", "Thành công!", "success");
-              navigate("/");
-            } else {
-              Swal.fire("Đăng nhập", "Thất bại!", "error");
-              console.error(res.error);
-            }
-          });
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    event.preventDefault();
     setValidated(true);
-  };
-  async function Getlogin() {}
+    LoginToIt()
+    };
+  }
+  async function LoginToIt() {
+    try {
+      let result = await fetch("http://localhost:8000/api/auth/login", {
+            method: "POST",
+            body: JSON.stringify({email:email,password:password}),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization' : 'Bearer ' + token
+            },
+          })
+          result = await result.json();
+          saveToken(result.user, result.access_token);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
   return (
     <div className="text-center">
       <h1 className="mt-5">Quản lý đất đai</h1>

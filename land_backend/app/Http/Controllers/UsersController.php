@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\Owner;
 
 class UsersController extends Controller
 {
-    private $apiToken;
-    public function __construct()
-    {
-    $this->apiToken = uniqid(base64_encode(Str::random(40)));
-    }
+    // private $apiToken;
+    // public function __construct()
+    // {
+    // $this->apiToken = uniqid(base64_encode(Str::random(40)));
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +25,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return new UsersController(User::all());
+        // $ownerlist = Owner::all()->get();
+        // $owners = $ownerlist->count();
+        // return $owners;
     }
 
     /**
@@ -45,25 +48,25 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password'
-        ]);
-        if($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
-        }
-        $Data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'remember_token' => $request->token,
-            'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
-            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
-        ];
-        $user = User::create($Data);
-        return response()->json(array("success"=> 1,"data"=>$Data ));
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required',
+        //     'email' => 'required|email|unique:users',
+        //     'password' => 'required',
+        //     'confirm_password' => 'required|same:password'
+        // ]);
+        // if($validator->fails()) {
+        //     return response()->json(['error' => $validator->errors()], 401);
+        // }
+        // $Data = [
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'remember_token' => $request->token,
+        //     'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+        //     'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
+        // ];
+        // $user = User::create($Data);
+        // return response()->json(array("success"=> 1,"data"=>$Data ));
 
     }
 
@@ -113,20 +116,20 @@ class UsersController extends Controller
     }
     public function login(Request $request){ 
         //User check
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-        $user = Auth::user();
-        //Setting login response 
-        $success['token'] = $this->apiToken;
-        $success['name'] =  $user->name;
-          return response()->json([
-            'status' => 'success',
-            'data' => $success
-          ]); 
-        } else { 
-          return response()->json([
-            'status' => 'error',
-            'data' => 'Unauthorized Access'
-          ]); 
-        } 
+    //     if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+    //     $user = Auth::user();
+    //     //Setting login response 
+    //     $success['token'] = $this->apiToken;
+    //     $success['name'] =  $user->name;
+    //       return response()->json([
+    //         'status' => 'success',
+    //         'data' => $success
+    //       ]); 
+    //     } else { 
+    //       return response()->json([
+    //         'status' => 'error',
+    //         'data' => 'Unauthorized Access'
+    //       ]); 
+    //     } 
       }
 }
