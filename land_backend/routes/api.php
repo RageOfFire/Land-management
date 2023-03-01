@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\LandController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
@@ -21,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Login
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -28,11 +31,16 @@ Route::group([
     ], function ($router) {
     
     Route::post('/login', [AuthController::class, 'login']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::post('/refresh', [AuthController::class, 'refresh']);
+
     Route::post('/me', [AuthController::class, 'me']);
+
     });
 
+// Home pages
 
 Route::get('/all', function() {
     // Owners
@@ -96,16 +104,30 @@ Route::get('/all', function() {
     return response($data);
 });
 
-// Route::post('/users', [UsersController::class, 'store']);
+// Owners
 
 Route::get('/owners', [OwnerController::class, 'index']);
 
 Route::post('/owners', [OwnerController::class, 'store']);
 
-Route::get('/owners/{owner}', [OwnerController::class, 'show']);
+Route::get('/owners/{id}', [OwnerController::class, 'show']);
 
-Route::post('/owners/{owner}', [OwnerController::class, 'update']);
+Route::post('/owners/{id}', [OwnerController::class, 'update']);
 
-Route::delete('/owners/{owner}', [OwnerController::class, 'destroy']);
+Route::delete('/owners/{id}', [OwnerController::class, 'destroy']);
 
-Route::get('/search',[OwnerController::class,'search']);
+Route::get('/owners/search',[OwnerController::class,'search']);
+
+// Lands
+
+Route::get('/lands', [LandController::class, 'index']);
+
+Route::post('/lands', [LandController::class, 'store']);
+
+Route::get('/lands/{land}', [LandController::class, 'show']);
+
+Route::post('/lands/{land}', [LandController::class, 'update']);
+
+Route::delete('/lands/{land}', [LandController::class, 'destroy']);
+
+Route::get('/lands/search',[LandController::class,'search']);

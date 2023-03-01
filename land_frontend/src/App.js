@@ -1,9 +1,10 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Pages/Login";
-import List from './Pages/List';
+import Protected from './Components/Protected';
 import Home from './Pages/Home';
-// import Search from './Pages/Search';
+import Owner from './Pages/Owner';
+import Land from './Pages/Land';
 
 function App() {
   const getToken = () => {
@@ -24,7 +25,8 @@ function App() {
           <Home />
          }
         />
-        <Route path='/owner' element={<List />} />
+        <Route path='/owner' element={<Protected Cmp={Owner} />} />
+        <Route path='/land' element={<Protected Cmp={Land} />} />
       </Routes>
       </BrowserRouter>
     </div>

@@ -24,6 +24,7 @@ function Header() {
     sessionStorage.clear();
     console.log(result);
     navigate("/");
+    window.location.reload();
   }
   const fetchUserDetail = async () => {
   try {
@@ -69,8 +70,9 @@ function Header() {
           </Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-        Đăng nhập với tên: <span style={{cursor: 'pointer'}} onClick={logout} className="link-warning">{userDetail.name}</span>
-      </Navbar.Text>
+            Đăng nhập với tên: <span style={{cursor: 'pointer'}} onClick={logout} className="link-warning">{userDetail.name}</span>
+          </Navbar.Text>
+          {/* {LoadingUser()} */}
         </Navbar.Collapse>
         </Container>
       </Navbar>

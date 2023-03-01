@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table ,Button } from "react-bootstrap";
 import Add from "../Components/Add";
 import Update from "../Components/Update";
+import Search from "../Components/Search";
+import Header from "../Components/Header";
 import Sidebar from "../Components/Sidebar";
 import Swal from "sweetalert2";
-import Header from "../Components/Header";
-import Search from "../Components/Search";
-function List() {
+function Owner() {
   // UseState
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -139,7 +139,7 @@ const UpdateData = {
 async function SearchItem(key) {
   if(key) {
     const searchParams = new URLSearchParams({ key });
-    let result = await fetch("http://127.0.0.1:8000/api/search?" + searchParams);
+    let result = await fetch("http://127.0.0.1:8000/api/owners/search?" + searchParams);
     result = await result.json();
     setData(result);
   }
@@ -188,15 +188,15 @@ const onChangeSearch = (e) => SearchItem(e.target.value)
       <Add show={modalShow} data={AddData} onHide={() => setModalShow(false)} onSubmit={addItem} />
       <Update show={modalShowUpdate} data={UpdateData} onHide={() => setModalShowUpdate(false)} onSubmit={updateItem} />
       <div className="col-sm-8 offset-sm-2">
-        <Table striped bordered hover size="sm" responsive className="text-center">
+      <Table striped bordered hover size="sm" responsive className="text-center">
           <thead>
             <tr>
               <td>Id</td>
-              <td>Name</td>
-              <td>Address</td>
-              <td>Phone number</td>
+              <td>Tên chủ sở hữu</td>
+              <td>Địa chỉ</td>
+              <td>Số điện thoại</td>
               <td>Email</td>
-              <td colSpan={2} className="text-center">Settings</td>
+              <td colSpan={2} className="text-center">Cài đặt</td>
             </tr>
           </thead>
           <tbody>
@@ -229,4 +229,4 @@ const onChangeSearch = (e) => SearchItem(e.target.value)
     </div>
   );
 }
-export default List;
+export default Owner;

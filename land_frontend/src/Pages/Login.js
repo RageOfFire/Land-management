@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+// import Swal from "sweetalert2";
 import { Image, FloatingLabel, Form, Button } from "react-bootstrap";
 import hunre from "../image/HUNRE.png";
 function Login() {
@@ -19,7 +18,6 @@ function Login() {
   }
   const [token, setToken] = useState(getToken());
   const [user,setUser] = useState(getUser());
-  const navigate = useNavigate();
   
 
   const saveToken = (user,token) => {
@@ -27,7 +25,7 @@ function Login() {
     sessionStorage.setItem('user', JSON.stringify(user));
     setToken(token);
     setUser(user);
-    navigate("/");
+    window.location.reload();
   }
 
   const handleSubmit = async (event) => {
