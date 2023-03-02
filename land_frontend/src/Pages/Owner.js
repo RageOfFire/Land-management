@@ -61,7 +61,6 @@ function Owner() {
       method: "DELETE",
     });
     result = result.json();
-    console.log(result);
     fetchData().catch(console.error);
   }
 // Add Item
@@ -71,12 +70,10 @@ function Owner() {
     formData.append("address", address);
     formData.append("phone_number", phone);
     formData.append("email", email);
-    console.log(formData);
     await fetch("http://127.0.0.1:8000/api/owners", {
       method: "POST",
       body: formData,
     }).then(res => {
-      console.log(res.message)
       Swal.fire("Good job!", "Owner Added Successfully", "success");
     })
     fetchData().catch(console.error);
@@ -90,7 +87,6 @@ const UpdateData = {
     onChange: (e) => setName(e.target.value),
     label: 'Tên chủ sở hữu',
     value: updateData.name,
-    onLoad: () => setName(updateData.name)
   },
   {
     controlId: 'floatingAddress',
@@ -98,7 +94,6 @@ const UpdateData = {
     onChange: (e) => setAddress(e.target.value),
     label: 'Địa chỉ',
     value: updateData.address,
-    onLoad: () => setAddress(updateData.address)
   },
   {
     controlId: 'floatingPhone',
@@ -106,7 +101,6 @@ const UpdateData = {
     onChange: (e) => setPhone(e.target.value),
     label: 'Số điện thoại',
     value: updateData.phone_number,
-    onLoad: () => setPhone(updateData.phone_number)
   },
   {
     controlId: 'floatingEmail',
@@ -114,13 +108,11 @@ const UpdateData = {
     onChange: (e) => setEmail(e.target.value),
     label: 'Email',
     value: updateData.email,
-    onLoad: () => setEmail(updateData.email)
   }
 ]
 }
 // Update Item
   async function updateItem() {
-    console.log(updateId, name, address, phone, email);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("address", address);
@@ -130,7 +122,6 @@ const UpdateData = {
       method: "POST",
       body: formData,
     }).then(res => {
-      console.log(res.message)
       Swal.fire("Good job!", "Owner Update Successfully", "success");
     })
     fetchData().catch(console.error);
@@ -138,8 +129,7 @@ const UpdateData = {
 // Search item
 async function SearchItem(key) {
   if(key) {
-    const searchParams = new URLSearchParams({ key });
-    let result = await fetch("http://127.0.0.1:8000/api/owners/search?" + searchParams);
+    let result = await fetch("http://127.0.0.1:8000/api/owners/search/" + key);
     result = await result.json();
     setData(result);
   }
@@ -160,7 +150,6 @@ const onChangeSearch = (e) => SearchItem(e.target.value)
       "http://127.0.0.1:8000/api/owners/" + id
     );
     result = await result.json();
-    console.log(result);
     setUpdateData(result);
     setUpdateId(result.owner_id);
     setName(result.name);
@@ -218,7 +207,7 @@ const onChangeSearch = (e) => SearchItem(e.target.value)
                 <td>
                     <Button 
                     variant="outline-primary" 
-                    onClick={() => {fetchDataUpdate(item.owner_id)}}
+                    onClick={() => fetchDataUpdate(item.owner_id)}
                     >Update</Button>
                 </td>
               </tr>

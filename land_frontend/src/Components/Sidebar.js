@@ -1,12 +1,10 @@
 import {
   Button,
   Offcanvas,
-  ListGroup,
-  DropdownButton,
-  Dropdown,
+  ListGroup
 } from "react-bootstrap";
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   const [show, setShow] = useState(false);
@@ -14,11 +12,6 @@ function Sidebar() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   // let user = JSON.parse(localStorage.getItem('user-info'));
-  const navigate = useNavigate();
-  function logOut() {
-    localStorage.clear();
-    navigate("/");
-  }
   return (
     <div>
       <Button
@@ -55,7 +48,14 @@ function Sidebar() {
                 Chủ sở hữu
               </NavLink>
             </ListGroup.Item>
-            <ListGroup.Item as="li">Đất đai</ListGroup.Item>
+            <ListGroup.Item as="li"><NavLink
+                to="/land"
+                className={({ isActive }) =>
+                  isActive ? "link-primary" : "text-dark"
+                }
+              >
+                Đất đai
+              </NavLink></ListGroup.Item>
             <ListGroup.Item as="li">Giao dịch</ListGroup.Item>
             <ListGroup.Item as="li">Lịch sử thay đổi trạng thái</ListGroup.Item>
             <ListGroup.Item as="li">Biểu phí</ListGroup.Item>

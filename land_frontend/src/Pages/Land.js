@@ -45,21 +45,25 @@ function Land() {
     },
     {
       controlId: 'floatingPlan',
-      type: 'text',
+      type: 'textarea',
       onChange: (e) => setPlan(e.target.value),
       label: 'Mục đích sử dụng'
     },
     {
-      controlId: 'floatingStatusTrue',
+      controlId: 'floatingStatus',
       type: 'radio',
-      onChange: (e) => setStatus(true),
-      label: 'Đã đăng ký'
-    },
-    {
-      controlId: 'floatingStatusFalse',
-      type: 'radio',
-      onChange: (e) => setStatus(false),
-      label: 'Chưa đăng ký'
+      radioControl: [
+        {
+          id: 'floatingStatusTrue',
+          onChange: () => setStatus(true),
+          label: 'Đã đăng ký'
+        },
+        {
+          id: 'floatingStatusFalse',
+          onChange: () => setStatus(false),
+          label: 'Chưa đăng ký'
+        }
+      ]
     },
     {
       controlId: 'floatingValue',
@@ -119,48 +123,58 @@ const UpdateData = {
     type: 'text',
     onChange: (e) => setAddress(e.target.value),
     label: 'Địa chỉ',
-    value: updateData.address,
-    onLoad: () => setAddress(updateData.address)
+    value: updateData.address
   },
   {
     controlId: 'floatingArea',
     type: 'number',
     onChange: (e) => setArea(e.target.value),
     label: 'Diện tích',
-    value: updateData.area_decimal,
-    onLoad: () => setArea(updateData.area_decimal)
+    value: updateData.area_decimal
   },
   {
     controlId: 'floatingPlan',
-    type: 'text',
+    type: 'textarea',
     onChange: (e) => setPlan(e.target.value),
     label: 'Mục đích sử dụng',
-    value: updateData.use_plans,
-    onLoad: () => setPlan(updateData.use_plans)
+    value: updateData.use_plans
   },
   {
-    controlId: 'floatingStatusTrue',
+    controlId: 'floatingStatus',
     type: 'radio',
-    onChange: (e) => setStatus(true),
     label: 'Đã đăng ký',
-    value: updateData.status,
-    onLoad: () => setStatus(updateData.status)
-  },
-  {
-    controlId: 'floatingStatusFalse',
-    type: 'radio',
-    onChange: (e) => setStatus(false),
-    label: 'Chưa đăng ký',
-    value: updateData.status,
-    onLoad: () => setStatus(updateData.status)
+    radioControl: [
+      {
+        id: 'floatingStatusTrue',
+        onChange: () => setStatus(true),
+        label: 'Đã đăng ký',
+        value: updateData.status === 1,
+      },
+      {
+        id: 'floatingStatusFalse',
+        onChange: () => setStatus(false),
+        label: 'Chưa đăng ký',
+        value: updateData.status === 0,
+      }
+    ]
   },
   {
     controlId: 'floatingValue',
     type: 'number',
     onChange: (e) => setValue(e.target.value),
     label: 'Giá trị',
-    value: updateData.value,
-    onLoad: () => setValue(updateData.value)
+    value: updateData.value
+  },
+  {
+    controlId: 'floatingOwnerId',
+    type: 'select',
+    label: 'Chủ sở hữu',
+    value: updateData.owner_id,
+    onChange: (e) => setOwnerId(e.target.value),
+    getItemForeign: ownerData.map((item) => (
+      <option key={item.owner_id} value={item.owner_id}>{item.name} - {item.address}</option>
+    ))
+    
   }
 ]
 }
@@ -185,8 +199,7 @@ const UpdateData = {
 // Search item
 async function SearchItem(key) {
   if(key) {
-    const searchParams = new URLSearchParams({ key });
-    let result = await fetch("http://127.0.0.1:8000/api/lands/search?" + searchParams);
+    let result = await fetch("http://127.0.0.1:8000/api/lands/search/" + key);
     result = await result.json();
     setData(result);
   }
@@ -261,7 +274,7 @@ const onChangeSearch = (e) => SearchItem(e.target.value)
                 <td>{item.address}</td>
                 <td>{item.area_decimal}</td>
                 <td>{item.use_plans}</td>
-                <td>{item.status}</td>
+                <td>{item.status === 1 ? "Đã đăng ký" : "Chưa đăng ký"}</td>
                 <td>{item.value}</td>
                 <td>{item.owner_id}</td>
                 <td>

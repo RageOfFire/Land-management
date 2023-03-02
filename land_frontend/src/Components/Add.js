@@ -15,45 +15,75 @@ function Add(props) {
         </Modal.Header>
         <Modal.Body className="text-center">
           {props.data.Form.map((item) => {
-            switch(item.type) {
+            switch (item.type) {
               case "radio":
                 return (
-                <Form.Check
-                    inline
-                    key={item.controlId}
-                    label={item.label}
-                    type={item.type}
-                    className="mb-3"
-                    onChange={item.onChange}
-                    id={item.controlId}
-                  />
-              )
+                  <div key={item.controlId} className="mb-3">
+                    {item.radioControl.map((radioItem) => (
+                      <Form.Check
+                        inline
+                        key={radioItem.id}
+                        id={radioItem.id}
+                        label={radioItem.label}
+                        name={item.controlId}
+                        type={item.type}
+                        onChange={radioItem.onChange}
+                      />
+                    ))}
+                  </div>
+                );
               case "select":
                 return (
-                <Form.Select aria-label="Default select example" key={item.controlId} onChange={item.onChange} defaultValue={'DEFAULT'}>
-                  <option value="DEFAULT" disabled>{item.label}</option>
-                  {item.getItemForeign}
-                  {/* <option value="1">1</option> */}
-                </Form.Select>
-              )
+                  <FloatingLabel
+                    controlId={item.controlId}
+                    key={item.controlId}
+                    label={item.label}
+                  >
+                    <Form.Select
+                      aria-label={item.label}
+                      onChange={item.onChange}
+                      defaultValue={"DEFAULT"}
+                    >
+                      <option value="DEFAULT" disabled hidden>
+                        Chọn thông tin
+                      </option>
+                      {item.getItemForeign}
+                    </Form.Select>
+                  </FloatingLabel>
+                );
+              case "textarea":
+                return (
+                  <FloatingLabel
+                    key={item.controlId}
+                    controlId={item.controlId}
+                    label={item.label}
+                    className="mb-3"
+                  >
+                    <Form.Control as={item.type} placeholder={item.label} />
+                  </FloatingLabel>
+                );
               default:
                 return (
-                <FloatingLabel
-                      key={item.controlId}
-                      controlId={item.controlId}
-                      label={item.label}
-                      className="mb-3"
-                    >
+                  <FloatingLabel
+                    key={item.controlId}
+                    controlId={item.controlId}
+                    label={item.label}
+                    className="mb-3"
+                  >
                     <Form.Control
                       type={item.type}
                       placeholder={item.label}
                       onChange={item.onChange}
                     />
-                </FloatingLabel>
-                )
+                  </FloatingLabel>
+                );
             }
           })}
-          <Button variant="outline-success" className="my-3 text-center" onClick={props.onSubmit}>
+          <Button
+            variant="outline-success"
+            className="my-3 text-center"
+            onClick={props.onSubmit}
+          >
             Thêm
           </Button>{" "}
         </Modal.Body>

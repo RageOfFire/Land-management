@@ -110,13 +110,13 @@ Route::get('/owners', [OwnerController::class, 'index']);
 
 Route::post('/owners', [OwnerController::class, 'store']);
 
-Route::get('/owners/{id}', [OwnerController::class, 'show']);
+Route::get('/owners/{owner}', [OwnerController::class, 'show']);
 
-Route::post('/owners/{id}', [OwnerController::class, 'update']);
+Route::post('/owners/{owner}', [OwnerController::class, 'update']);
 
-Route::delete('/owners/{id}', [OwnerController::class, 'destroy']);
+Route::delete('/owners/{owner}', [OwnerController::class, 'destroy']);
 
-Route::get('/owners/search',[OwnerController::class,'search']);
+Route::get('/owners/search/{key}', [OwnerController::class, 'search']);
 
 // Lands
 
@@ -130,4 +130,4 @@ Route::post('/lands/{land}', [LandController::class, 'update']);
 
 Route::delete('/lands/{land}', [LandController::class, 'destroy']);
 
-Route::get('/lands/search',[LandController::class,'search']);
+Route::get('/lands/search/{key}', [LandController::class, 'search']);

@@ -112,11 +112,7 @@ class LandController extends Controller
             'message' => 'land deleted'
         ]);
     }
-    public function search(Request $request) {
-        $validatedKey = $request->validate([
-            'key' => ['required']
-        ]);
-        $key = $validatedKey['key'];
+    public function search($key) {
         $lands = Land::where('address', 'LIKE', "%".$key."%")
         ->orWhere('area_decimal','LIKE',"%".$key."%")
         ->orWhere('use_plans','LIKE',"%".$key."%")

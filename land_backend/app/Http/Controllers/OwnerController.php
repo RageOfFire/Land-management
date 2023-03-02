@@ -109,11 +109,7 @@ class OwnerController extends Controller
             'message' => 'owner deleted'
         ]);
     }
-    public function search(Request $request) {
-        $validatedKey = $request->validate([
-            'key' => ['required']
-        ]);
-        $key = $validatedKey['key'];
+    public function search($key) {
         $owners = Owner::where('name', 'LIKE', "%".$key."%")
         ->orWhere('address','LIKE',"%".$key."%")
         ->orWhere('phone_number','LIKE',"%".$key."%")
