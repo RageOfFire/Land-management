@@ -14,7 +14,8 @@ class AssetController extends Controller
      */
     public function index()
     {
-        //
+        $asset = Asset::all();
+        return response()->json($asset);
     }
 
     /**
@@ -35,7 +36,15 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'land_id' => 'required',
+            'home' => 'nullable',
+            'construction' => 'nullable',
+            'road' => 'nullable'
+        ]);
+        $asset = Asset::create($request->all());
+        return response()->json(['message'=> 'asset created', 
+        'asset' => $asset]);
     }
 
     /**
@@ -46,7 +55,7 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
-        //
+        return $asset;
     }
 
     /**
@@ -69,7 +78,22 @@ class AssetController extends Controller
      */
     public function update(Request $request, Asset $asset)
     {
-        //
+        $request->validate([
+            'land_id' => 'required',
+            'home' => 'nullable',
+            'construction' => 'nullable',
+            'road' => 'nullable'
+        ]);
+        $asset->land_id = $request->input('land_id');
+        $asset->home = $request->input('home');
+        $asset->construction = $request->input('construction');
+        $asset->road = $request->input('road');
+        $asset->save();
+
+        return response()->json([
+            'message' => 'asset updated!',
+            'asset' => $asset
+        ]);
     }
 
     /**
@@ -80,6 +104,16 @@ class AssetController extends Controller
      */
     public function destroy(Asset $asset)
     {
-        //
+        $asset->delete();
+        return response()->json([
+            'message' => 'asset deleted'
+        ]);
+    }
+    public function search($key) {
+        $asset = Asset::where('home', 'LIKE', "%".$key."%")
+        ->orWhere('construction','LIKE',"%".$key."%")
+        ->orWhere('road','LIKE',"%".$key."%")
+        ->get();
+        return response()->json($asset);
     }
 }

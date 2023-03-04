@@ -19,9 +19,9 @@ class OwnerFactory extends Factory
         $faker = \Faker\Factory::create('vi_VN');
         return [
             'name' => $faker->name(),
-            'address' => $faker->streetAddress(),
+            'address' => $faker->address(),
             'phone_number' => $faker->numerify('#########'),
-            'email' => $faker->unique()->safeEmail()
+            'email' => $faker->unique()->freeEmail()
         ];
     }
 }

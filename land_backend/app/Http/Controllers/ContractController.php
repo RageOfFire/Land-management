@@ -14,7 +14,8 @@ class ContractController extends Controller
      */
     public function index()
     {
-        //
+        $contract = Contract::all();
+        return response()->json($contract);
     }
 
     /**
@@ -35,7 +36,16 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'land_id' => 'required',
+            'contract_start' => 'required',
+            'contract_end' => 'required',
+            'use_plans' => 'required',
+            'value' => 'required'
+        ]);
+        $contract = Contract::create($request->all());
+        return response()->json(['message'=> 'contract created', 
+        'contract' => $contract]);
     }
 
     /**
@@ -46,7 +56,7 @@ class ContractController extends Controller
      */
     public function show(Contract $contract)
     {
-        //
+        return $contract;
     }
 
     /**
@@ -69,7 +79,24 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
-        //
+        $request->validate([
+            'land_id' => 'required',
+            'contract_start' => 'required',
+            'contract_end' => 'required',
+            'use_plans' => 'required',
+            'value' => 'required'
+        ]);
+        $contract->land_id = $request->input('land_id');
+        $contract->contract_start = $request->input('contract_start');
+        $contract->contract_end = $request->input('contract_end');
+        $contract->use_plans = $request->input('use_plans');
+        $contract->value = $request->input('value');
+        $contract->save();
+
+        return response()->json([
+            'message' => 'contract updated!',
+            'contract' => $contract
+        ]);
     }
 
     /**
@@ -80,6 +107,15 @@ class ContractController extends Controller
      */
     public function destroy(Contract $contract)
     {
-        //
+        $contract->delete();
+        return response()->json([
+            'message' => 'contract deleted'
+        ]);
+    }
+    public function search($key) {
+        $contract = Contract::where('use_plans', 'LIKE', "%".$key."%")
+        ->orWhere('value','LIKE',"%".$key."%")
+        ->get();
+        return response()->json($contract);
     }
 }

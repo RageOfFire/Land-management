@@ -14,7 +14,8 @@ class ModstatusController extends Controller
      */
     public function index()
     {
-        //
+        $modstatus = Modstatus::all();
+        return response()->json($modstatus);
     }
 
     /**
@@ -35,7 +36,16 @@ class ModstatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'land_id' => 'required',
+            'mod_date' => 'nullable',
+            'mod_info' => 'nullable',
+            'mod_name' => 'nullable',
+            'mod_reason' => 'nullable'
+        ]);
+        $modstatus = ModStatus::create($request->all());
+        return response()->json(['message'=> 'modstatus created', 
+        'modstatus' => $modstatus]);
     }
 
     /**
@@ -46,7 +56,7 @@ class ModstatusController extends Controller
      */
     public function show(Modstatus $modstatus)
     {
-        //
+        return $modstatus;
     }
 
     /**
@@ -69,7 +79,24 @@ class ModstatusController extends Controller
      */
     public function update(Request $request, Modstatus $modstatus)
     {
-        //
+        $request->validate([
+            'land_id' => 'required',
+            'mod_date' => 'nullable',
+            'mod_info' => 'nullable',
+            'mod_name' => 'nullable',
+            'mod_reason' => 'nullable'
+        ]);
+        $modstatus->land_id = $request->input('land_id');
+        $modstatus->mod_date = $request->input('mod_date');
+        $modstatus->mod_info = $request->input('mod_info');
+        $modstatus->mod_name = $request->input('mod_name');
+        $modstatus->mod_reason = $request->input('mod_reason');
+        $modstatus->save();
+
+        return response()->json([
+            'message' => 'modstatus updated!',
+            'modstatus' => $modstatus
+        ]);
     }
 
     /**
@@ -80,6 +107,16 @@ class ModstatusController extends Controller
      */
     public function destroy(Modstatus $modstatus)
     {
-        //
+        $modstatus->delete();
+        return response()->json([
+            'message' => 'modstatus deleted'
+        ]);
+    }
+    public function search($key) {
+        $modstatus = Modstatus::where('mod_info', 'LIKE', "%".$key."%")
+        ->orWhere('mod_name','LIKE',"%".$key."%")
+        ->orWhere('mod_reason','LIKE',"%".$key."%")
+        ->get();
+        return response()->json($modstatus);
     }
 }

@@ -14,7 +14,8 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+        $status = Status::all();
+        return response()->json($status);
     }
 
     /**
@@ -35,7 +36,15 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'land_id' => 'required',
+            'status_charge' => 'required',
+            'old_status' => 'nullable',
+            'new_status' => 'nullable'
+        ]);
+        $status = Status::create($request->all());
+        return response()->json(['message'=> 'status created', 
+        'status' => $status]);
     }
 
     /**
@@ -46,7 +55,7 @@ class StatusController extends Controller
      */
     public function show(Status $status)
     {
-        //
+        return $status;
     }
 
     /**
@@ -69,7 +78,22 @@ class StatusController extends Controller
      */
     public function update(Request $request, Status $status)
     {
-        //
+        $request->validate([
+            'land_id' => 'required',
+            'status_charge' => 'required',
+            'old_status' => 'nullable',
+            'new_status' => 'nullable'
+        ]);
+        $status->land_id = $request->input('land_id');
+        $status->status_charge = $request->input('status_charge');
+        $status->old_status = $request->input('old_status');
+        $status->new_status = $request->input('new_status');
+        $status->save();
+
+        return response()->json([
+            'message' => 'status updated!',
+            'status' => $status
+        ]);
     }
 
     /**
@@ -80,6 +104,16 @@ class StatusController extends Controller
      */
     public function destroy(Status $status)
     {
-        //
+        $status->delete();
+        return response()->json([
+            'message' => 'status deleted'
+        ]);
+    }
+    public function search($key) {
+        $status = Status::where('status_charge', 'LIKE', "%".$key."%")
+        ->orWhere('old_status','LIKE',"%".$key."%")
+        ->orWhere('new_status','LIKE',"%".$key."%")
+        ->get();
+        return response()->json($status);
     }
 }

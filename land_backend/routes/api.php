@@ -2,6 +2,12 @@
 
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\LandController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\AssetController;
+use App\Http\Controllers\ContractController;
+use App\Http\Controllers\CostController;
+use App\Http\Controllers\ModstatusController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
@@ -131,3 +137,87 @@ Route::post('/lands/{land}', [LandController::class, 'update']);
 Route::delete('/lands/{land}', [LandController::class, 'destroy']);
 
 Route::get('/lands/search/{key}', [LandController::class, 'search']);
+
+// Transactions
+
+Route::get('/transactions', [TransactionController::class, 'index']);
+
+Route::post('/transactions', [TransactionController::class, 'store']);
+
+Route::get('/transactions/{transaction}', [TransactionController::class, 'show']);
+
+Route::post('/transactions/{transaction}', [TransactionController::class, 'update']);
+
+Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy']);
+
+Route::get('/transactions/search/{key}', [TransactionController::class, 'search']);
+
+// Statuses
+
+Route::get('/statuses', [StatusController::class, 'index']);
+
+Route::post('/statuses', [StatusController::class, 'store']);
+
+Route::get('/statuses/{status}', [StatusController::class, 'show']);
+
+Route::post('/statuses/{status}', [StatusController::class, 'update']);
+
+Route::delete('/statuses/{status}', [StatusController::class, 'destroy']);
+
+Route::get('/statuses/search/{key}', [StatusController::class, 'search']);
+
+// Assets
+
+Route::get('/assets', [AssetController::class, 'index']);
+
+Route::post('/assets', [AssetController::class, 'store']);
+
+Route::get('/assets/{asset}', [AssetController::class, 'show']);
+
+Route::post('/assets/{asset}', [AssetController::class, 'update']);
+
+Route::delete('/assets/{asset}', [AssetController::class, 'destroy']);
+
+Route::get('/assets/search/{key}', [AssetController::class, 'search']);
+
+// Contracts
+
+Route::get('/contracts', [ContractController::class, 'index']);
+
+Route::post('/contracts', [ContractController::class, 'store']);
+
+Route::get('/contracts/{contract}', [ContractController::class, 'show']);
+
+Route::post('/contracts/{contract}', [ContractController::class, 'update']);
+
+Route::delete('/contracts/{contract}', [ContractController::class, 'destroy']);
+
+Route::get('/contracts/search/{key}', [ContractController::class, 'search']);
+
+// Costs
+
+Route::get('/costs', [CostController::class, 'index']);
+
+Route::post('/costs', [CostController::class, 'store']);
+
+Route::get('/costs/{cost}', [CostController::class, 'show']);
+
+Route::post('/costs/{cost}', [CostController::class, 'update']);
+
+Route::delete('/costs/{cost}', [CostController::class, 'destroy']);
+
+Route::get('/costs/search/{key}', [CostController::class, 'search']);
+
+// Modstatuses
+
+Route::get('/modstatuses', [ModstatusController::class, 'index']);
+
+Route::post('/modstatuses', [ModstatusController::class, 'store']);
+
+Route::get('/modstatuses/{modstatus}', [ModstatusController::class, 'show']);
+
+Route::post('/modstatuses/{modstatus}', [ModstatusController::class, 'update']);
+
+Route::delete('/modstatuses/{modstatus}', [ModstatusController::class, 'destroy']);
+
+Route::get('/modstatuses/search/{key}', [ModstatusController::class, 'search']);

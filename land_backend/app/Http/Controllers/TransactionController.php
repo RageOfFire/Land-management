@@ -14,7 +14,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transaction = Transaction::all();
+        return response()->json($transaction);
     }
 
     /**
@@ -35,7 +36,14 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'transaction_date' => 'required',
+            'value' => 'required',
+            'owner_id' => 'required'
+        ]);
+        $transaction = $transaction::create($request->all());
+        return response()->json(['message'=> 'transaction created', 
+        'transaction' => $transaction]);
     }
 
     /**
@@ -46,7 +54,7 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
+        return $transaction;
     }
 
     /**
@@ -69,7 +77,20 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-        //
+        $request->validate([
+            'transaction_date' => 'required',
+            'value' => 'required',
+            'owner_id' => 'required'
+        ]);
+        $transaction->transaction_date = $request->input('transaction_date');
+        $transaction->value = $request->input('value');
+        $transaction->owner_id = $request->input('owner_id');
+        $transaction->save();
+
+        return response()->json([
+            'message' => 'transaction updated!',
+            'transaction' => $transaction
+        ]);
     }
 
     /**
@@ -80,6 +101,15 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        //
+        $transaction->delete();
+        return response()->json([
+            'message' => 'transaction deleted'
+        ]);
+    }
+    public function search($key) {
+        $transaction = Transaction::where('transaction_date', 'LIKE', "%".$key."%")
+        ->orWhere('value','LIKE',"%".$key."%")
+        ->get();
+        return response()->json($transaction);
     }
 }
