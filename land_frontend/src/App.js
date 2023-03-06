@@ -5,6 +5,8 @@ import Protected from './Components/Protected';
 import Home from './Pages/Home';
 import Owner from './Pages/Owner';
 import Land from './Pages/Land';
+import Transaction from './Pages/Transaction';
+import Status from './Pages/Status';
 
 function App() {
   const getToken = () => {
@@ -27,6 +29,8 @@ function App() {
         />
         <Route path='/owner' element={<Protected Cmp={Owner} />} />
         <Route path='/land' element={<Protected Cmp={Land} />} />
+        <Route path='/transaction' element={<Protected Cmp={Transaction} />} />
+        <Route path='/status' element={<Protected Cmp={Status} />} />
       </Routes>
       </BrowserRouter>
     </div>

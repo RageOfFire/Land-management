@@ -38,6 +38,7 @@ function Add(props) {
                     controlId={item.controlId}
                     key={item.controlId}
                     label={item.label}
+                    className="mb-3"
                   >
                     <Form.Select
                       aria-label={item.label}
@@ -59,7 +60,7 @@ function Add(props) {
                     label={item.label}
                     className="mb-3"
                   >
-                    <Form.Control as={item.type} placeholder={item.label} />
+                    <Form.Control as={item.type} placeholder={item.label} onChange={item.onChange} />
                   </FloatingLabel>
                 );
               default:

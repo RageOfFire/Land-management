@@ -41,7 +41,7 @@ class TransactionController extends Controller
             'value' => 'required',
             'owner_id' => 'required'
         ]);
-        $transaction = $transaction::create($request->all());
+        $transaction = Transaction::create($request->all());
         return response()->json(['message'=> 'transaction created', 
         'transaction' => $transaction]);
     }

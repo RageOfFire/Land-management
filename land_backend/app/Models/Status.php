@@ -12,4 +12,8 @@ class Status extends Model
         'land_id', 'status_charge', 'old_status', 'new_status'
     ];
     protected $primaryKey = 'status_id';
+
+    protected $casts = [
+        'status_charge' => 'datetime:Y-m-d',
+    ];
 }

@@ -11,5 +11,10 @@ class Transaction extends Model
     protected $fillable = [
         'transaction_date', 'value', 'owner_id'
     ];
+
     protected $primaryKey = 'transaction_id';
+
+    protected $casts = [
+        'transaction_date' => 'datetime:Y-m-d',
+    ];
 }

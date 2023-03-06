@@ -56,8 +56,22 @@ function Sidebar() {
               >
                 Đất đai
               </NavLink></ListGroup.Item>
-            <ListGroup.Item as="li">Giao dịch</ListGroup.Item>
-            <ListGroup.Item as="li">Lịch sử thay đổi trạng thái</ListGroup.Item>
+            <ListGroup.Item as="li"><NavLink
+                to="/transaction"
+                className={({ isActive }) =>
+                  isActive ? "link-primary" : "text-dark"
+                }
+              >
+                Giao dịch
+              </NavLink></ListGroup.Item>
+            <ListGroup.Item as="li"><NavLink
+                to="/status"
+                className={({ isActive }) =>
+                  isActive ? "link-primary" : "text-dark"
+                }
+              >
+                Trạng thái
+              </NavLink></ListGroup.Item>
             <ListGroup.Item as="li">Biểu phí</ListGroup.Item>
             <ListGroup.Item as="li">Lịch sử thay đổi</ListGroup.Item>
           </ListGroup>

@@ -42,6 +42,7 @@ function Update(props) {
                     key={item.controlId}
                     onChange={item.onChange}
                     defaultValue={item.value}
+                    className="mb-3"
                   >
                     {item.getItemForeign}
                   </Form.Select>
@@ -55,7 +56,7 @@ function Update(props) {
                     label={item.label}
                     className="mb-3"
                   >
-                  <Form.Control as={item.type} placeholder={item.label} defaultValue={item.value} />
+                  <Form.Control as={item.type} placeholder={item.label} defaultValue={item.value} onChange={item.onChange} />
                   </FloatingLabel>
                   )
               default:
