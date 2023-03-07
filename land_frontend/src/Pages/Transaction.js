@@ -61,6 +61,16 @@ function Transaction() {
     result = result.json();
     console.log(result);
     fetchData().catch(console.error);
+    Swal.fire({
+      toast: true,
+      position: 'top-right',
+      iconColor: 'white',
+      icon: 'error',
+      title: 'Xóa thành công',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true
+    });
   }
 // Add Item
   async function addItem() {
@@ -72,10 +82,17 @@ function Transaction() {
     await fetch("http://127.0.0.1:8000/api/transactions", {
       method: "POST",
       body: formData,
-    }).then(res => {
-      console.log(res.message)
-      Swal.fire("Good job!", "Transaction Added Successfully", "success");
     })
+    Swal.fire({
+      toast: true,
+      position: 'top-right',
+      iconColor: 'white',
+      icon: 'success',
+      title: 'Thêm thành công',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true
+    });
     fetchData().catch(console.error);
   }
 // Send to update form
@@ -117,10 +134,17 @@ const UpdateData = {
     await fetch("http://127.0.0.1:8000/api/transactions/" + updateId, {
       method: "POST",
       body: formData,
-    }).then(res => {
-      console.log(res.message)
-      Swal.fire("Good job!", "Land Update Successfully", "success");
     })
+    Swal.fire({
+      toast: true,
+      position: 'top-right',
+      iconColor: 'white',
+      icon: 'success',
+      title: 'Sửa thành công',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true
+    });
     fetchData().catch(console.error);
   }
 // Search item

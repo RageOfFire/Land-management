@@ -1,9 +1,8 @@
 import { useState } from "react";
 // import Swal from "sweetalert2";
-import { Image, FloatingLabel, Form, Button } from "react-bootstrap";
+import { Image, FloatingLabel, Button, Form } from "react-bootstrap";
 import hunre from "../image/HUNRE.png";
 function Login() {
-  const [validated, setValidated] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const getToken = () => {
@@ -28,18 +27,6 @@ function Login() {
     window.location.reload();
   }
 
-  const handleSubmit = async (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else {
-    event.preventDefault();
-    setValidated(true);
-    LoginToIt()
-    };
-  }
   async function LoginToIt() {
     try {
       let result = await fetch("http://localhost:8000/api/auth/login", {
@@ -47,7 +34,7 @@ function Login() {
             body: JSON.stringify({email:email,password:password}),
             headers: {
               'Content-Type': 'application/json',
-              'Authorization' : 'Bearer ' + token
+              // 'Authorization' : 'Bearer ' + token
             },
           })
           result = await result.json();
@@ -62,7 +49,6 @@ function Login() {
       <h1 className="mt-5">Quản lý đất đai</h1>
       <div className="container shadow-lg p-3 mb-5 bg-body rounded mt-5">
         <Image src={hunre} width="100" roundedCircle={true} />
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <div className="d-grid gap-2">
             <h2 className="my-3">Đăng nhập</h2>
             <FloatingLabel
@@ -76,9 +62,6 @@ function Login() {
                 placeholder="name@example.com"
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <Form.Control.Feedback type="invalid">
-                Bạn cần nhập email để tiếp tục.
-              </Form.Control.Feedback>
             </FloatingLabel>
             <FloatingLabel
               controlId="floatingPassword"
@@ -91,15 +74,11 @@ function Login() {
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Form.Control.Feedback type="invalid">
-                Bạn cần nhập mật khẩu để tiếp tục.
-              </Form.Control.Feedback>
             </FloatingLabel>
-            <Button variant="primary" size="lg" type="submit">
+            <Button variant="primary" size="lg" onClick={LoginToIt}>
               Đăng nhập
             </Button>
           </div>
-        </Form>
       </div>
     </div>
   );
