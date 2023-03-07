@@ -12,4 +12,8 @@ class Modstatus extends Model
         'land_id', 'mod_date', 'mod_info', 'mod_name', 'mod_reason'
     ];
     protected $primaryKey = 'mod_id';
+
+    protected $casts = [
+        'mod_date' => 'datetime:Y-m-d',
+    ];
 }

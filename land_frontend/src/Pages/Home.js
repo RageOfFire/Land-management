@@ -12,14 +12,8 @@ function Home() {
   const fetchData = async () => {
     let result = await fetch("http://127.0.0.1:8000/api/all");
     result = await result.json();
-    console.log(result);
     setData(result);
   };
-  // const [index, setIndex] = useState(0);
-
-  // const handleSelect = (selectedIndex, e) => {
-  //   setIndex(selectedIndex);
-  // };
   return (
     <div>
       <Header />

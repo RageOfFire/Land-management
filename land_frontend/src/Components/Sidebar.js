@@ -72,25 +72,40 @@ function Sidebar() {
               >
                 Trạng thái
               </NavLink></ListGroup.Item>
-            <ListGroup.Item as="li">Biểu phí</ListGroup.Item>
-            <ListGroup.Item as="li">Lịch sử thay đổi</ListGroup.Item>
+            <ListGroup.Item as="li"><NavLink
+                to="/asset"
+                className={({ isActive }) =>
+                  isActive ? "link-primary" : "text-dark"
+                }
+              >
+                Tài sản gắn liền
+              </NavLink></ListGroup.Item>
+            <ListGroup.Item as="li"><NavLink
+                to="/contract"
+                className={({ isActive }) =>
+                  isActive ? "link-primary" : "text-dark"
+                }
+              >
+                Hợp đồng
+              </NavLink></ListGroup.Item>
+            <ListGroup.Item as="li"><NavLink
+                to="/cost"
+                className={({ isActive }) =>
+                  isActive ? "link-primary" : "text-dark"
+                }
+              >
+                Biểu phí
+              </NavLink></ListGroup.Item>
+            <ListGroup.Item as="li"><NavLink
+                to="/modstatus"
+                className={({ isActive }) =>
+                  isActive ? "link-primary" : "text-dark"
+                }
+              >
+                Lịch sử thay đổi
+              </NavLink></ListGroup.Item>
           </ListGroup>
         </Offcanvas.Body>
-        {/* <div className="position-relative">
-          <div className="position-absolute bottom-0 end-0 mb-3 me-3">
-            <DropdownButton
-              key="up"
-              id={`login-dropdown`}
-              drop="up"
-              variant="info"
-              title={"Chào mừng trở lại"}
-            >
-              <Dropdown.Item eventKey="1" onClick={logOut}>
-                Đăng xuất
-              </Dropdown.Item>
-            </DropdownButton>
-          </div>
-        </div> */}
       </Offcanvas>
     </div>
   );

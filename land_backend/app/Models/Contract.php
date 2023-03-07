@@ -12,4 +12,9 @@ class Contract extends Model
         'land_id', 'contract_start', 'contract_end', 'use_plans', 'value'
     ];
     protected $primaryKey = 'contract_id';
+
+    protected $casts = [
+        'contract_start' => 'datetime:Y-m-d',
+        'contract_end' => 'datetime:Y-m-d',
+    ];
 }
