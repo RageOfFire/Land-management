@@ -14,7 +14,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $status = Status::all();
+        $status = Status::paginate(10);
         return response()->json($status);
     }
 

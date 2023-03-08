@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table ,Button } from "react-bootstrap";
+import { Table ,Button, Pagination } from "react-bootstrap";
 import Add from "../Components/Add";
 import Update from "../Components/Update";
 import Search from "../Components/Search";
@@ -13,6 +13,8 @@ function Owner() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [data, setData] = useState([]);
+  const [link, setLink] = useState([]);
+  const [url, setURL] = useState("");
   const [updateData, setUpdateData] = useState({
     name: '',
     address: '',
@@ -54,13 +56,14 @@ function Owner() {
 // Reload data
   useEffect(() => {
     fetchData().catch(console.error);
-  }, []);
+  }, [url]);
 // Delete Item
   async function deleteOperation(id) {
     let result = await fetch("http://127.0.0.1:8000/api/owners/" + id, {
       method: "DELETE",
     });
     result = result.json();
+    console.log(result);
     fetchData().catch(console.error);
     Swal.fire({
       toast: true,
@@ -163,12 +166,13 @@ async function SearchItem(key) {
     fetchData().catch(console.error);
   }
 }
-const onChangeSearch = (e) => SearchItem(e.target.value)
+const onChangeSearch = (e) => SearchItem(e.target.value);
 // Call Data ALl
   const fetchData = async () => {
-    let result = await fetch("http://127.0.0.1:8000/api/owners");
+    let result = await fetch(url || "http://127.0.0.1:8000/api/owners");
     result = await result.json();
-    setData(result);
+    setData(result.data);
+    setLink(result.links);
   };
 // Call Data for only single Id
   const fetchDataUpdate = async (id) => {
@@ -240,6 +244,13 @@ const onChangeSearch = (e) => SearchItem(e.target.value)
             ))}
           </tbody>
         </Table>
+        <Pagination className="text-center">
+          {link.map((item) => (
+            <Pagination.Item key={item.label} active={item.active} onClick={() => setURL(item.url)}>
+                {item.label}
+            </Pagination.Item>
+          ))}
+      </Pagination>
       </div>
     </div>
   );

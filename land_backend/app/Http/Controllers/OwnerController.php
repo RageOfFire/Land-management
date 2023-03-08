@@ -14,7 +14,7 @@ class OwnerController extends Controller
      */
     public function index()
     {
-        $owners = Owner::all();
+        $owners = Owner::paginate(10);
         return response()->json($owners);
     }
 

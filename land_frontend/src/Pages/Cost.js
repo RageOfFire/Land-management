@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table ,Button } from "react-bootstrap";
+import { Table ,Button, Pagination } from "react-bootstrap";
 import Add from "../Components/Add";
 import Update from "../Components/Update";
 import Search from "../Components/Search";
@@ -13,6 +13,8 @@ function Status() {
   const [maintenance, setMaintenance] = useState(0);
   const [manage, setManage] = useState(0);
   const [data, setData] = useState([]);
+  const [link, setLink] = useState([]);
+  const [url, setURL] = useState("");
   const [updateData, setUpdateData] = useState({
     land_id: 0,
     service_cost: 0,
@@ -60,7 +62,7 @@ function Status() {
   useEffect(() => {
     fetchData().catch(console.error);
     fetchForeign().catch(console.error);
-  }, []);
+  }, [url]);
 // Delete Item
   async function deleteOperation(id) {
     let result = await fetch("http://127.0.0.1:8000/api/costs/" + id, {
@@ -176,14 +178,15 @@ async function SearchItem(key) {
 const onChangeSearch = (e) => SearchItem(e.target.value)
 // Call Data ALl
   const fetchData = async () => {
-    let result = await fetch("http://127.0.0.1:8000/api/costs");
+    let result = await fetch(url || "http://127.0.0.1:8000/api/costs");
     result = await result.json();
-    setData(result);
+    setData(result.data);
+    setLink(result.links);
   };
   const fetchForeign = async () => {
     let result = await fetch("http://127.0.0.1:8000/api/lands");
     result = await result.json();
-    setLandData(result)
+    setLandData(result.data)
   };
 // Call Data for only single Id
   const fetchDataUpdate = async (id) => {
@@ -255,6 +258,13 @@ const onChangeSearch = (e) => SearchItem(e.target.value)
             ))}
           </tbody>
         </Table>
+        <Pagination className="text-center">
+          {link.map((item) => (
+            <Pagination.Item key={item.label} active={item.active} onClick={() => setURL(item.url)}>
+                {item.label}
+            </Pagination.Item>
+          ))}
+      </Pagination>
       </div>
     </div>
   );

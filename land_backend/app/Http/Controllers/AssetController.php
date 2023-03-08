@@ -14,7 +14,7 @@ class AssetController extends Controller
      */
     public function index()
     {
-        $asset = Asset::all();
+        $asset = Asset::paginate(10);
         return response()->json($asset);
     }
 

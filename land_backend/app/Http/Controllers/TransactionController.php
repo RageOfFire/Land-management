@@ -14,7 +14,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transaction = Transaction::all();
+        $transaction = Transaction::paginate(10);
         return response()->json($transaction);
     }
 

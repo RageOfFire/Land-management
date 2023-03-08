@@ -14,7 +14,7 @@ class LandController extends Controller
      */
     public function index()
     {
-        $lands = Land::all();
+        $lands = Land::paginate(10);
         return response()->json($lands);
     }
 

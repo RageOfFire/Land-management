@@ -14,7 +14,7 @@ class CostController extends Controller
      */
     public function index()
     {
-        $cost = Cost::all();
+        $cost = Cost::paginate(10);
         return response()->json($cost);
     }
 

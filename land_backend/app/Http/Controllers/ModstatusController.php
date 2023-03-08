@@ -14,7 +14,7 @@ class ModstatusController extends Controller
      */
     public function index()
     {
-        $modstatus = Modstatus::all();
+        $modstatus = Modstatus::paginate(10);
         return response()->json($modstatus);
     }
 
