@@ -1,44 +1,46 @@
 import { useState } from "react";
-// import Swal from "sweetalert2";
-import { Image, FloatingLabel, Button, Form } from "react-bootstrap";
+import { Image, FloatingLabel, Button, Form, Spinner } from "react-bootstrap";
 import hunre from "../image/HUNRE.png";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const getToken = () => {
-    const tokenString = sessionStorage.getItem('token');
-    const userToken = JSON.parse(tokenString);
-    return userToken;
-  }
-  const getUser = () => {
-    const userString = sessionStorage.getItem('user');
-    const userDetail = JSON.parse(userString);
-    return userDetail;
-  }
-  const [token, setToken] = useState(getToken());
-  const [user,setUser] = useState(getUser());
+  const [isLoading, setIsLoading] = useState(false);
+  // const getToken = () => {
+  //   const tokenString = sessionStorage.getItem('token');
+  //   const userToken = JSON.parse(tokenString);
+  //   return userToken;
+  // }
+  // const getUser = () => {
+  //   const userString = sessionStorage.getItem('user');
+  //   const userDetail = JSON.parse(userString);
+  //   return userDetail;
+  // }
+  // const [token, setToken] = useState(getToken());
+  // const [user,setUser] = useState(getUser());
   
 
   const saveToken = (user,token) => {
     sessionStorage.setItem('token', JSON.stringify(token));
     sessionStorage.setItem('user', JSON.stringify(user));
-    setToken(token);
-    setUser(user);
+    // setToken(token);
+    // setUser(user);
     window.location.reload();
+    setIsLoading(false)
   }
 
   async function LoginToIt() {
+    setIsLoading(true)
     try {
-      let result = await fetch("http://localhost:8000/api/auth/login", {
+      await fetch("http://localhost:8000/api/auth/login", {
             method: "POST",
             body: JSON.stringify({email:email,password:password}),
             headers: {
-              'Content-Type': 'application/json',
-              // 'Authorization' : 'Bearer ' + token
+              'Content-Type': 'application/json'
             },
+          }).then((res) => res.json())
+          .then((res) => {
+            saveToken(res.user, res.access_token);
           })
-          result = await result.json();
-          saveToken(result.user, result.access_token);
     }
     catch (err) {
       console.error(err);
@@ -75,8 +77,8 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </FloatingLabel>
-            <Button variant="primary" size="lg" onClick={LoginToIt}>
-              Đăng nhập
+            <Button variant="primary" size="lg" disabled={isLoading} onClick={LoginToIt}>
+              {isLoading ? <Spinner animation="border" variant="light" /> : 'Đăng nhập'}
             </Button>
           </div>
       </div>

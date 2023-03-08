@@ -1,10 +1,11 @@
-import { Button, Modal, FloatingLabel, Form } from "react-bootstrap";
+import { Button, Modal, FloatingLabel, Form, Spinner } from "react-bootstrap";
 
 function Update(props) {
   return (
     <div>
       <Modal
-        {...props}
+        show={props.show}
+        onHide={props.onHide}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -82,7 +83,7 @@ function Update(props) {
             className="my-3 text-center"
             onClick={props.onSubmit}
           >
-            Chỉnh sửa
+          {props.isLoading ? <Spinner animation="border" variant="danger" /> : 'Chỉnh sửa'}
           </Button>{" "}
         </Modal.Body>
         <Modal.Footer>
