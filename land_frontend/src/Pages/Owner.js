@@ -286,13 +286,13 @@ function Owner() {
             </Pagination.Item>
           ))}
         </Pagination>
+        </div>
         {isLoading ?
             <div className="text-center my-5">
             <Spinner animation="border" variant="info" /><br />
             Đang tải...
             </div>
         : null}
-      </div>
     </div>
   );
 }

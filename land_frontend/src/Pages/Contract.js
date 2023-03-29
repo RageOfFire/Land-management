@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Pagination } from "react-bootstrap";
+import { Table, Button, Pagination, Spinner } from "react-bootstrap";
 import Add from "../Components/Add";
 import Update from "../Components/Update";
 import Search from "../Components/Search";
