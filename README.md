@@ -9,7 +9,6 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/RageOfFire/Land-management)
 ![GitHub followers](https://img.shields.io/github/followers/RageOfFire)
 ![GitHub Repo stars](https://img.shields.io/github/stars/RageOfFire/Land-management)
-![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/RageOfFire/Land-management)
 
 ## Mô tả
 
